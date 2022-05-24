@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 public class App {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String inputPath = System.getProperty("user.dir") + "/src/main/resources/";
         String outputPath = inputPath;
 
@@ -20,22 +20,26 @@ public class App {
 
         for (File file : files) {
             if (file.isFile() && !file.getName().contains("_result")) {
-                RandomAccessFile inputReader = new RandomAccessFile(file.getAbsolutePath(), "r");
+                try {
+                    RandomAccessFile inputReader = new RandomAccessFile(file.getAbsolutePath(), "r");
 
-                RandomAccessFile outputStream = new RandomAccessFile(getOutputFileName(outputPath, file.getName()), "rw");
-                FileChannel channel = outputStream.getChannel();
+                    RandomAccessFile outputStream = new RandomAccessFile(getOutputFileName(outputPath, file.getName()), "rw");
+                    FileChannel channel = outputStream.getChannel();
 
-                String value = inputReader.readLine();
-                byte[] strBytes = value.getBytes();
-                ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
-                buffer.put(strBytes);
+                    String value = inputReader.readLine();
+                    byte[] strBytes = value.getBytes();
+                    ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
+                    buffer.put(strBytes);
 
-                buffer.flip();
-                channel.write(buffer);
-                outputStream.close();
-                channel.close();
+                    buffer.flip();
+                    channel.write(buffer);
+                    outputStream.close();
+                    channel.close();
 
-                inputReader.close();
+                    inputReader.close();
+                } catch (IOException e) {
+                    System.out.println("Error in file " + file.getName() + ". Exception: " + e.getMessage());
+                }
             }
         }
 
