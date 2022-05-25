@@ -38,7 +38,7 @@ public class App {
                     Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
                     marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
                     ExpressionsOutput expressionsOutput = new ExpressionsOutput();
-                    expressionsOutput.setResult(List.of(expressionsInput.getAddition().calculate()));
+                    expressionsOutput.setResult(List.of(expressionsInput.getAddition().calculate(), expressionsInput.getSubtraction().calculate()));
                     marshaller.marshal(expressionsOutput, fileToBlock);
 
                     outputStream.close();

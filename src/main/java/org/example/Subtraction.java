@@ -2,18 +2,17 @@ package org.example;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class Addition implements Operation {
+public class Subtraction implements Operation {
     private Integer id;
-    private List<Integer> item;
+    private Integer minuend;
+    private Integer subtrahend;
 
     @Override
     public Result calculate() {
         Result result = new Result();
         result.setId(id);
-        result.setResult(item.stream().reduce(0, Integer::sum));
+        result.setResult(minuend - subtrahend);
         return result;
     }
 }

@@ -12,4 +12,7 @@ import lombok.Data;
 public class ExpressionsInput {
     @XmlElement
     private Addition addition;
+
+    @XmlElement
+    private Subtraction subtraction;
 }
