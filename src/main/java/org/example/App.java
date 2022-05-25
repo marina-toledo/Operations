@@ -1,5 +1,10 @@
 package org.example;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -23,8 +28,17 @@ public class App {
                 try {
                     RandomAccessFile inputReader = new RandomAccessFile(file.getAbsolutePath(), "r");
 
-                    RandomAccessFile outputStream = new RandomAccessFile(getOutputFileName(outputPath, file.getName()), "rw");
+                    File fileToBlock = new File(getOutputFileName(outputPath, file.getName()));
+                    RandomAccessFile outputStream = new RandomAccessFile(fileToBlock, "rw");
                     FileChannel channel = outputStream.getChannel();
+
+                    JAXBContext jaxbContext = JAXBContext.newInstance(Expressions.class);
+                    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                    Expressions expressions = (Expressions) jaxbUnmarshaller.unmarshal(file);
+
+                    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+                    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+                    jaxbMarshaller.marshal(expressions, fileToBlock);
 
                     String value = inputReader.readLine();
                     byte[] strBytes = value.getBytes();
@@ -37,7 +51,7 @@ public class App {
                     channel.close();
 
                     inputReader.close();
-                } catch (IOException e) {
+                } catch (IOException | JAXBException e) {
                     System.out.println("Error in file " + file.getName() + ". Exception: " + e.getMessage());
                 }
             }
