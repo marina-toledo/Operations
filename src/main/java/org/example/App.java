@@ -8,8 +8,8 @@ import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -32,21 +32,18 @@ public class App {
                     RandomAccessFile outputStream = new RandomAccessFile(fileToBlock, "rw");
                     FileChannel channel = outputStream.getChannel();
 
-                    JAXBContext jaxbContext = JAXBContext.newInstance(Expressions.class);
-                    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                    Expressions expressions = (Expressions) jaxbUnmarshaller.unmarshal(file);
+                    Unmarshaller unmarshaller = JAXBContext.newInstance(ExpressionsInput.class).createUnmarshaller();
+                    ExpressionsInput expressions = (ExpressionsInput) unmarshaller.unmarshal(file);
 
-                    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-                    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                    jaxbMarshaller.marshal(expressions, fileToBlock);
+                    Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
+                    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+                    ExpressionsOutput expressionsOutput = new ExpressionsOutput();
+                    Result result = new Result();
+                    result.setId(12);
+                    result.setResult(9);
+                    expressionsOutput.setResult(List.of(result));
+                    marshaller.marshal(expressionsOutput, fileToBlock);
 
-                    String value = inputReader.readLine();
-                    byte[] strBytes = value.getBytes();
-                    ByteBuffer buffer = ByteBuffer.allocate(strBytes.length);
-                    buffer.put(strBytes);
-
-                    buffer.flip();
-                    channel.write(buffer);
                     outputStream.close();
                     channel.close();
 
