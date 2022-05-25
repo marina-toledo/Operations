@@ -6,18 +6,28 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 
 import java.io.File;
-import java.util.List;
 
-public class XMLParser {
+public class XMLParser extends Parser {
 
-    public static void process(File file, File fileToBlock) throws JAXBException {
-        Unmarshaller unmarshaller = JAXBContext.newInstance(ExpressionsInput.class).createUnmarshaller();
-        ExpressionsInput expressionsInput = (ExpressionsInput) unmarshaller.unmarshal(file);
+    @Override
+    public ExpressionsInput parseInput(File file) throws ParseException {
+        try {
+            Unmarshaller unmarshaller = JAXBContext.newInstance(ExpressionsInput.class).createUnmarshaller();
+            return (ExpressionsInput) unmarshaller.unmarshal(file);
+        } catch (JAXBException e) {
+            throw new ParseException(e);
+        }
+    }
 
-        Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        ExpressionsOutput expressionsOutput = new ExpressionsOutput();
-        expressionsOutput.setResult(List.of(expressionsInput.getAddition().calculate(), expressionsInput.getSubtraction().calculate()));
-        marshaller.marshal(expressionsOutput, fileToBlock);
+    @Override
+    public void writeOutput(File file, ExpressionsOutput expressionsOutput) throws ParseException {
+        try {
+            Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.marshal(expressionsOutput, file);
+        } catch (JAXBException e) {
+            throw new ParseException(e);
+
+        }
     }
 }

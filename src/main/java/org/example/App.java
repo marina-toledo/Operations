@@ -29,13 +29,13 @@ public class App {
                     RandomAccessFile outputStream = new RandomAccessFile(fileOutput, "rw");
                     FileChannel channel = outputStream.getChannel();
 
-                    XMLParser.process(fileInput, fileOutput);
+                    new XMLParser().process(fileInput, fileOutput);
 
                     outputStream.close();
                     channel.close();
 
                     inputReader.close();
-                } catch (IOException | JAXBException e) {
+                } catch (IOException | ParseException e) {
                     System.out.println("Error in file " + fileInput.getName() + ". Exception: " + e.getMessage());
                 }
             }
