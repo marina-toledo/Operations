@@ -33,15 +33,12 @@ public class App {
                     FileChannel channel = outputStream.getChannel();
 
                     Unmarshaller unmarshaller = JAXBContext.newInstance(ExpressionsInput.class).createUnmarshaller();
-                    ExpressionsInput expressions = (ExpressionsInput) unmarshaller.unmarshal(file);
+                    ExpressionsInput expressionsInput = (ExpressionsInput) unmarshaller.unmarshal(file);
 
                     Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
                     marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
                     ExpressionsOutput expressionsOutput = new ExpressionsOutput();
-                    Result result = new Result();
-                    result.setId(12);
-                    result.setResult(9);
-                    expressionsOutput.setResult(List.of(result));
+                    expressionsOutput.setResult(List.of(expressionsInput.getAddition().calculate()));
                     marshaller.marshal(expressionsOutput, fileToBlock);
 
                     outputStream.close();
