@@ -1,11 +1,17 @@
 package org.example.model;
 
+import jakarta.xml.bind.annotation.*;
 import lombok.Data;
 
 @Data
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Subtraction implements Operation {
+    @XmlAttribute
     private Integer id;
+    @XmlElement
     private Integer minuend;
+    @XmlElement
     private Integer subtrahend;
 
     @Override

@@ -5,16 +5,16 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
-import org.example.model.Addition;
-import org.example.model.Subtraction;
+
+import java.util.List;
 
 @Data
 @XmlRootElement(name = "expressions")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ExpressionsInput {
     @XmlElement
-    private Addition addition;
+    private List<Addition> addition;
 
     @XmlElement
-    private Subtraction subtraction;
+    private List<Subtraction> subtraction;
 }

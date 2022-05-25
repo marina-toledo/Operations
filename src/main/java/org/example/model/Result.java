@@ -10,6 +10,6 @@ public class Result {
     @XmlAttribute
     private Integer id;
 
-    @XmlElement
+    @XmlValue
     private Integer result;
 }
