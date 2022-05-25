@@ -1,15 +1,12 @@
 package org.example;
 
-import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
-import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -23,30 +20,23 @@ public class App {
             System.exit(0);
         }
 
-        for (File file : files) {
-            if (file.isFile() && !file.getName().contains("_result")) {
+        for (File fileInput : files) {
+            if (fileInput.isFile() && !fileInput.getName().contains("_result")) {
                 try {
-                    RandomAccessFile inputReader = new RandomAccessFile(file.getAbsolutePath(), "r");
+                    RandomAccessFile inputReader = new RandomAccessFile(fileInput.getAbsolutePath(), "r");
 
-                    File fileToBlock = new File(getOutputFileName(outputPath, file.getName()));
-                    RandomAccessFile outputStream = new RandomAccessFile(fileToBlock, "rw");
+                    File fileOutput = new File(getOutputFileName(outputPath, fileInput.getName()));
+                    RandomAccessFile outputStream = new RandomAccessFile(fileOutput, "rw");
                     FileChannel channel = outputStream.getChannel();
 
-                    Unmarshaller unmarshaller = JAXBContext.newInstance(ExpressionsInput.class).createUnmarshaller();
-                    ExpressionsInput expressionsInput = (ExpressionsInput) unmarshaller.unmarshal(file);
-
-                    Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
-                    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                    ExpressionsOutput expressionsOutput = new ExpressionsOutput();
-                    expressionsOutput.setResult(List.of(expressionsInput.getAddition().calculate(), expressionsInput.getSubtraction().calculate()));
-                    marshaller.marshal(expressionsOutput, fileToBlock);
+                    XMLParser.process(fileInput, fileOutput);
 
                     outputStream.close();
                     channel.close();
 
                     inputReader.close();
                 } catch (IOException | JAXBException e) {
-                    System.out.println("Error in file " + file.getName() + ". Exception: " + e.getMessage());
+                    System.out.println("Error in file " + fileInput.getName() + ". Exception: " + e.getMessage());
                 }
             }
         }
@@ -56,9 +46,9 @@ public class App {
         //format of files
     }
 
+    @NotNull
     private static String getOutputFileName(String path, String inputFileName) {
         int indexOfExtension = inputFileName.lastIndexOf('.');
-        String outputFileName = path + inputFileName.substring(0, indexOfExtension) + "_result" + inputFileName.substring(indexOfExtension);
-        return outputFileName;
+        return path + inputFileName.substring(0, indexOfExtension) + "_result" + inputFileName.substring(indexOfExtension);
     }
 }
