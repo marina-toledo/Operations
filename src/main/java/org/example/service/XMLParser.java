@@ -1,9 +1,11 @@
-package org.example;
+package org.example.service;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
+import org.example.model.ExpressionsInput;
+import org.example.model.ExpressionsOutput;
 
 import java.io.File;
 
