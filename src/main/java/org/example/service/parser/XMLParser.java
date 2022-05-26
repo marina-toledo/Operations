@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.parser;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;

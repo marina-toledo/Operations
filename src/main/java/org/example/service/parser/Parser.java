@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.parser;
 
 import org.example.model.ExpressionsInput;
 import org.example.model.ExpressionsOutput;

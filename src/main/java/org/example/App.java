@@ -1,8 +1,8 @@
 package org.example;
 
 import org.example.service.Calculator;
-import org.example.service.ParseException;
-import org.example.service.XMLParser;
+import org.example.service.parser.ParseException;
+import org.example.service.parser.XMLParser;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
