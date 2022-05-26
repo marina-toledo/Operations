@@ -1,7 +1,7 @@
 package org.example;
 
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -34,5 +34,11 @@ public class AppTest {
 
         App.main(new String[]{PATH, PATH});
         assertTrue(new File(outputFileName).exists());
+    }
+
+    @Test
+    public void shouldGenerateOutputFileName() {
+        String outputFileName = App.getOutputFileName("", "inputFileName.json");
+        assertEquals("inputFileName_result.json", outputFileName);
     }
 }
