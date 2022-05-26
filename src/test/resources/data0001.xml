@@ -1,15 +1,20 @@
 <expressions>
-    <addition id="3">
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
+    <addition id="1">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </addition>
     <subtraction id="2">
-        <minuend>1</minuend>
-        <subtrahend>1</subtrahend>
+        <minuend>3</minuend>
+        <subtrahend>2</subtrahend>
     </subtraction>
-    <addition id="1">
-        <item>1</item>
-        <item>1</item>
-    </addition>
+    <multiplication id="3">
+        <factor>5</factor>
+        <factor>6</factor>
+        <factor>8</factor>
+    </multiplication>
+    <division id="4">
+        <dividend>54</dividend>
+        <divisor>9</divisor>
+    </division>
 </expressions>

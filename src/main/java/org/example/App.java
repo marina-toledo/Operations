@@ -17,9 +17,10 @@ public class App {
         String outputPath = args[1];
 
         File[] files = new File(inputPath).listFiles();
+        File[] outputFolder = new File(inputPath).listFiles();
 
-        if (files == null) {
-            System.out.println("Input path is not a directory.");
+        if (files == null || outputFolder == null) {
+            System.out.println("Input path " + inputPath + " or output path " + outputPath + "is not a directory.");
             System.exit(0);
         }
 

@@ -2,7 +2,7 @@ package org.example.service.parser;
 
 public class ParserFactory {
 
-    public static final XMLParser XML_PARSER = new XMLParser();
+    private final XMLParser XML_PARSER = new XMLParser();
 
     public enum FileFormat {
         XML
