@@ -5,6 +5,9 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
+import org.example.model.operation.Addition;
+import org.example.model.operation.Operation;
+import org.example.model.operation.Subtraction;
 
 import java.util.List;
 import java.util.stream.Collectors;

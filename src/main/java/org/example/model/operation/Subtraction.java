@@ -1,25 +1,25 @@
-package org.example.model;
+package org.example.model.operation;
 
 import jakarta.xml.bind.annotation.*;
 import lombok.Data;
-
-import java.util.List;
+import org.example.model.Result;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Addition implements Operation {
+public class Subtraction implements Operation {
     @XmlAttribute
     private Integer id;
-
     @XmlElement
-    private List<Integer> item;
+    private Integer minuend;
+    @XmlElement
+    private Integer subtrahend;
 
     @Override
     public Result calculate() {
         Result result = new Result();
         result.setId(id);
-        result.setResult(item.stream().reduce(0, Integer::sum));
+        result.setResult(minuend - subtrahend);
         return result;
     }
 }

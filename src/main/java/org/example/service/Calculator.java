@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.model.ExpressionsInput;
 import org.example.model.ExpressionsOutput;
-import org.example.model.Operation;
+import org.example.model.operation.Operation;
 import org.example.model.Result;
 
 import java.util.ArrayList;
