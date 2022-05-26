@@ -7,6 +7,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @XmlRootElement(name = "expressions")
@@ -17,4 +19,8 @@ public class ExpressionsInput {
 
     @XmlElement
     private List<Subtraction> subtraction;
+
+    public List<Operation> getOperations() {
+        return Stream.concat(addition.stream(),subtraction.stream()).collect(Collectors.toList());
+    }
 }

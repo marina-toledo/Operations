@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.service.Calculator;
 import org.example.service.ParseException;
 import org.example.service.XMLParser;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +31,11 @@ public class App {
                     RandomAccessFile outputStream = new RandomAccessFile(fileOutput, "rw");
                     FileChannel channel = outputStream.getChannel();
 
-                    new XMLParser().process(fileInput, fileOutput);
+                    XMLParser xmlParser = new XMLParser();
+                    xmlParser.writeOutput(
+                            fileOutput,
+                            Calculator.process(xmlParser.parseInput(fileInput))
+                    );
 
                     outputStream.close();
                     channel.close();

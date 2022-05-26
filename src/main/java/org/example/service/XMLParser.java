@@ -9,7 +9,7 @@ import org.example.model.ExpressionsOutput;
 
 import java.io.File;
 
-public class XMLParser extends Parser {
+public class XMLParser implements Parser {
 
     @Override
     public ExpressionsInput parseInput(File file) throws ParseException {
