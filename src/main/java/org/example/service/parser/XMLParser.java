@@ -12,7 +12,7 @@ import java.io.File;
 public class XMLParser implements Parser {
 
     @Override
-    public ExpressionsInput parseInput(File file) throws ParseException {
+    public ExpressionsInput parse(File file) throws ParseException {
         try {
             Unmarshaller unmarshaller = JAXBContext.newInstance(ExpressionsInput.class).createUnmarshaller();
             return (ExpressionsInput) unmarshaller.unmarshal(file);
@@ -22,14 +22,13 @@ public class XMLParser implements Parser {
     }
 
     @Override
-    public void writeOutput(File file, ExpressionsOutput expressionsOutput) throws ParseException {
+    public void writeTo(File file, ExpressionsOutput expressionsOutput) throws ParseException {
         try {
             Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(expressionsOutput, file);
         } catch (JAXBException e) {
             throw new ParseException(e);
-
         }
     }
 }

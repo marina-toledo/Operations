@@ -7,9 +7,6 @@ import org.example.service.parser.ParserFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.channels.FileChannel;
 
 public class App {
 
@@ -19,7 +16,7 @@ public class App {
         String inputPath = args[0];
         String outputPath = args[1];
 
-        File[] files = new File(inputPath).listFiles();//If this pathname does not denote a directory, then listFiles() returns null.
+        File[] files = new File(inputPath).listFiles();
 
         if (files == null) {
             System.out.println("Input path is not a directory.");
@@ -31,31 +28,19 @@ public class App {
         for (File fileInput : files) {
             if (fileInput.isFile() && !fileInput.getName().contains(OUTPUT_SUFFIX)) {
                 try {
-                    RandomAccessFile inputReader = new RandomAccessFile(fileInput.getAbsolutePath(), "r");
-
-                    File fileOutput = new File(getOutputFileName(outputPath, fileInput.getName()));
-                    RandomAccessFile outputStream = new RandomAccessFile(fileOutput, "rw");
-                    FileChannel channel = outputStream.getChannel();
-
                     Parser parser = parserFactory.getParser(fileInput.getName());
-                    parser.writeOutput(
+                    File fileOutput = new File(getOutputFileName(outputPath, fileInput.getName()));
+
+                    parser.writeTo(
                             fileOutput,
-                            Calculator.process(parser.parseInput(fileInput))
+                            Calculator.process(parser.parse(fileInput))
                     );
 
-                    outputStream.close();
-                    channel.close();
-
-                    inputReader.close();
-                } catch (IOException | ParseException e) {
+                } catch (ParseException e) {
                     System.out.println("Error in file " + fileInput.getName() + ". " + e.getMessage());
                 }
             }
         }
-
-        //todo: handle variations in
-        //operations
-        //format of files
     }
 
     @NotNull

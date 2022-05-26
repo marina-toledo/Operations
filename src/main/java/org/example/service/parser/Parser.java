@@ -7,7 +7,7 @@ import java.io.File;
 
 public interface Parser {
 
-    ExpressionsInput parseInput(File file) throws ParseException;
+    ExpressionsInput parse(File file) throws ParseException;
 
-    void writeOutput(File file, ExpressionsOutput expressionsOutput) throws ParseException;
+    void writeTo(File dest, ExpressionsOutput content) throws ParseException;
 }

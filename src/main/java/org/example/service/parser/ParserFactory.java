@@ -2,13 +2,15 @@ package org.example.service.parser;
 
 public class ParserFactory {
 
+    public static final XMLParser XML_PARSER = new XMLParser();
+
     public enum FileFormat {
         XML
     }
 
     public Parser getParser(String fileName) throws ParseException {
         if (getFileExtension(fileName).equals(FileFormat.XML.name())) {
-            return new XMLParser();
+            return XML_PARSER;
         }
         throw new ParseException(new Exception("File Format not supported yet."));
     }
