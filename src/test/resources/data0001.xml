@@ -1,0 +1,15 @@
+<expressions>
+    <addition id="3">
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </addition>
+    <subtraction id="2">
+        <minuend>1</minuend>
+        <subtrahend>1</subtrahend>
+    </subtraction>
+    <addition id="1">
+        <item>1</item>
+        <item>1</item>
+    </addition>
+</expressions>

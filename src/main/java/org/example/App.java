@@ -12,21 +12,24 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 
 public class App {
+
+    public static final String OUTPUT_SUFFIX = "_result";
+
     public static void main(String[] args) {
-        String inputPath = System.getProperty("user.dir") + "/src/main/resources/";
-        String outputPath = inputPath;
+        String inputPath = args[0];
+        String outputPath = args[1];
 
         File[] files = new File(inputPath).listFiles();//If this pathname does not denote a directory, then listFiles() returns null.
 
         if (files == null) {
-            System.out.println("Empty folder.");
+            System.out.println("Input path is not a directory.");
             System.exit(0);
         }
 
         ParserFactory parserFactory = new ParserFactory();
 
         for (File fileInput : files) {
-            if (fileInput.isFile() && !fileInput.getName().contains("_result")) {
+            if (fileInput.isFile() && !fileInput.getName().contains(OUTPUT_SUFFIX)) {
                 try {
                     RandomAccessFile inputReader = new RandomAccessFile(fileInput.getAbsolutePath(), "r");
 
@@ -50,14 +53,14 @@ public class App {
             }
         }
 
-        //Obs: handle variations in
+        //todo: handle variations in
         //operations
         //format of files
     }
 
     @NotNull
-    private static String getOutputFileName(String path, String inputFileName) {
+    static String getOutputFileName(String path, String inputFileName) {
         int indexOfExtension = inputFileName.lastIndexOf('.');
-        return path + inputFileName.substring(0, indexOfExtension) + "_result" + inputFileName.substring(indexOfExtension);
+        return path + inputFileName.substring(0, indexOfExtension) + OUTPUT_SUFFIX + inputFileName.substring(indexOfExtension);
     }
 }
