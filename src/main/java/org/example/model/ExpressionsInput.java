@@ -5,9 +5,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
-import org.example.model.operation.Addition;
-import org.example.model.operation.Operation;
-import org.example.model.operation.Subtraction;
+import org.example.model.operation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,10 +16,10 @@ import java.util.stream.Stream;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ExpressionsInput {
     @XmlElement
-    private List<Addition> addition;
+    private List<JAXBAddition> addition;//todo
 
     @XmlElement
-    private List<Subtraction> subtraction;
+    private List<JAXBSubtraction> subtraction;//todo
 
     public List<Operation> getOperations() {
         return Stream.concat(addition.stream(),subtraction.stream()).collect(Collectors.toList());

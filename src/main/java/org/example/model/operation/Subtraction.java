@@ -1,19 +1,14 @@
 package org.example.model.operation;
 
-import jakarta.xml.bind.annotation.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.model.Result;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Subtraction implements Operation {
-    @XmlAttribute
-    private Integer id;
-    @XmlElement
-    private Integer minuend;
-    @XmlElement
-    private Integer subtrahend;
+public class Subtraction extends Operation {
+    Integer minuend;
+    Integer subtrahend;
 
     @Override
     public Result calculate() {

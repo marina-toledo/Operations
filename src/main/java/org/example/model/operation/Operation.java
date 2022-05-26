@@ -1,7 +1,11 @@
 package org.example.model.operation;
 
+import lombok.Data;
 import org.example.model.Result;
 
-public interface Operation {
-    Result calculate();
+@Data
+public abstract class Operation {
+    Integer id;
+
+    public abstract Result calculate();
 }

@@ -1,20 +1,15 @@
 package org.example.model.operation;
 
-import jakarta.xml.bind.annotation.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.example.model.Result;
 
 import java.util.List;
 
 @Data
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Addition implements Operation {
-    @XmlAttribute
-    private Integer id;
-
-    @XmlElement
-    private List<Integer> item;
+@EqualsAndHashCode(callSuper = true)
+public class Addition extends Operation {
+    List<Integer> item;
 
     @Override
     public Result calculate() {
