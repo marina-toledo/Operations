@@ -5,7 +5,7 @@ import org.example.model.ExpressionsOutput;
 
 import java.io.File;
 
-interface Parser {
+public interface Parser {
 
     ExpressionsInput parseInput(File file) throws ParseException;
 

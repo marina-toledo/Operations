@@ -2,7 +2,8 @@ package org.example;
 
 import org.example.service.Calculator;
 import org.example.service.parser.ParseException;
-import org.example.service.parser.XMLParser;
+import org.example.service.parser.Parser;
+import org.example.service.parser.ParserFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -22,6 +23,8 @@ public class App {
             System.exit(0);
         }
 
+        ParserFactory parserFactory = new ParserFactory();
+
         for (File fileInput : files) {
             if (fileInput.isFile() && !fileInput.getName().contains("_result")) {
                 try {
@@ -31,10 +34,10 @@ public class App {
                     RandomAccessFile outputStream = new RandomAccessFile(fileOutput, "rw");
                     FileChannel channel = outputStream.getChannel();
 
-                    XMLParser xmlParser = new XMLParser();
-                    xmlParser.writeOutput(
+                    Parser parser = parserFactory.getParser(fileInput.getName());
+                    parser.writeOutput(
                             fileOutput,
-                            Calculator.process(xmlParser.parseInput(fileInput))
+                            Calculator.process(parser.parseInput(fileInput))
                     );
 
                     outputStream.close();
@@ -42,7 +45,7 @@ public class App {
 
                     inputReader.close();
                 } catch (IOException | ParseException e) {
-                    System.out.println("Error in file " + fileInput.getName() + ". Exception: " + e.getMessage());
+                    System.out.println("Error in file " + fileInput.getName() + ". " + e.getMessage());
                 }
             }
         }
