@@ -7,6 +7,7 @@ import jakarta.xml.bind.Unmarshaller;
 import org.example.model.ExpressionsInput;
 import org.example.model.ExpressionsOutput;
 import org.example.model.JAXBExpressionsInput;
+import org.example.model.JAXBExpressionsOutput;
 
 import java.io.File;
 
@@ -25,9 +26,9 @@ public class XMLParser implements Parser {
     @Override
     public void writeTo(File file, ExpressionsOutput expressionsOutput) throws ParseException {
         try {
-            Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class).createMarshaller();
+            Marshaller marshaller = JAXBContext.newInstance(ExpressionsOutput.class, JAXBExpressionsOutput.class).createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(expressionsOutput, file);
+            marshaller.marshal(new JAXBExpressionsOutput(expressionsOutput), file);
         } catch (JAXBException e) {
             throw new ParseException(e);
         }

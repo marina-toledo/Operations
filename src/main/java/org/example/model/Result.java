@@ -8,8 +8,8 @@ import lombok.Data;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Result {
     @XmlAttribute
-    private Integer id;
+    Integer id;
 
     @XmlValue
-    private Integer result;
+    Integer result;
 }
