@@ -3,12 +3,12 @@
         <item>2</item>
         <item>3</item>
         <item>
+            <subtraction>
+                <minuend>7</minuend>
+                <subtrahend>3</subtrahend>
+            </subtraction>
         </item>
     </addition>
-    <subtraction>
-        <minuend>7</minuend>
-        <subtrahend>3</subtrahend>
-    </subtraction>
     <subtraction id="11">
         <minuend>3</minuend>
         <subtrahend>2</subtrahend>
