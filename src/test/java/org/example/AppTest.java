@@ -15,9 +15,11 @@ import static org.junit.Assert.*;
 
 public class AppTest {
 
-    public static final String PATH = System.getProperty("user.dir") + "/src/test/resources/";
-    public static final String PATH_SIMPLE = System.getProperty("user.dir") + "/src/test/resources/simple/";
-    public static final String PATH_COMPLEX = System.getProperty("user.dir") + "/src/test/resources/complex/";
+    public static final String SEP = File.separator;
+    public static final String RESOURCES_PATH = SEP + "src" + SEP + "test" + SEP + "resources" + SEP;
+    public static final String PATH = System.getProperty("user.dir") + RESOURCES_PATH;
+    public static final String PATH_SIMPLE = System.getProperty("user.dir") + RESOURCES_PATH + "simple" + SEP;
+    public static final String PATH_COMPLEX = System.getProperty("user.dir") + RESOURCES_PATH + "complex" + SEP;
 
     public void deleteGeneratedResultFiles(String path) {
         File dir = new File(path);
@@ -51,7 +53,7 @@ public class AppTest {
         assertTrue(
                 FileUtils.contentEquals(
                         new File(PATH_SIMPLE + "data0001_result.xml"),
-                        new File(PATH_SIMPLE + "result/data0001_result.xml")
+                        new File(PATH_SIMPLE + "result" + SEP + "data0001_result.xml")
                 )
         );
         deleteGeneratedResultFiles(PATH_SIMPLE);
@@ -64,7 +66,7 @@ public class AppTest {
         assertTrue(
                 FileUtils.contentEquals(
                         new File(PATH_COMPLEX + "data0002_result.xml"),
-                        new File(PATH_COMPLEX + "result/data0002_result.xml")
+                        new File(PATH_COMPLEX + "result" + SEP + "data0002_result.xml")
                 )
         );
         deleteGeneratedResultFiles(PATH_COMPLEX);
