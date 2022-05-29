@@ -1,18 +1,22 @@
 package org.example.model.operation;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.model.Result;
+import lombok.NoArgsConstructor;
+import org.example.model.IValue;
 
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Multiplication extends Operation {
-    List<Integer> factor;
+    List<IValue> factor;
 
     @Override
     public Integer getValue() {
-        return factor.stream().reduce(1, (a, b) -> a * b);
+        return factor.stream().map(IValue::getValue).reduce(1, (a, b) -> a * b);
     }
 }

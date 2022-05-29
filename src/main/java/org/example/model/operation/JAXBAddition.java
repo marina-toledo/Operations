@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.example.model.IValue;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class JAXBAddition extends Addition {
 
     @Override
     @XmlElement
-    public void setItem(List<Integer> item) {
+    public void setItem(List<IValue> item) {
         this.item = item;
     }
 }

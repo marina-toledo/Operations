@@ -1,5 +1,5 @@
 package org.example.model;
 
-public interface Value {
+public interface IValue {
     Integer getValue();
 }

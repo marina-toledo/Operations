@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.example.model.IValue;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,13 +19,13 @@ public class JAXBSubtraction extends Subtraction {
 
     @Override
     @XmlElement
-    public void setMinuend(Integer minuend) {
+    public void setMinuend(IValue minuend) {
         this.minuend = minuend;
     }
 
     @Override
     @XmlElement
-    public void setSubtrahend(Integer subtrahend) {
+    public void setSubtrahend(IValue subtrahend) {
         this.subtrahend = subtrahend;
     }
 }
