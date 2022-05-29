@@ -11,10 +11,7 @@ public class Division extends Operation {
     Integer divisor;
 
     @Override
-    public Result calculate() {
-        Result result = new Result();
-        result.setId(id);
-        result.setResult(dividend / divisor);
-        return result;
+    public Integer getValue() {
+        return dividend / divisor;
     }
 }

@@ -11,10 +11,7 @@ public class Subtraction extends Operation {
     Integer subtrahend;
 
     @Override
-    public Result calculate() {
-        Result result = new Result();
-        result.setId(id);
-        result.setResult(minuend - subtrahend);
-        return result;
+    public Integer getValue() {
+        return minuend - subtrahend;
     }
 }

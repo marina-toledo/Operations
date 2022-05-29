@@ -12,10 +12,7 @@ public class Multiplication extends Operation {
     List<Integer> factor;
 
     @Override
-    public Result calculate() {
-        Result result = new Result();
-        result.setId(id);
-        result.setResult(factor.stream().reduce(1, (a, b) -> a * b));
-        return result;
+    public Integer getValue() {
+        return factor.stream().reduce(1, (a, b) -> a * b);
     }
 }

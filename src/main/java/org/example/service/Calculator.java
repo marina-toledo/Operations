@@ -2,8 +2,8 @@ package org.example.service;
 
 import org.example.model.ExpressionsInput;
 import org.example.model.ExpressionsOutput;
-import org.example.model.operation.Operation;
 import org.example.model.Result;
+import org.example.model.operation.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,10 @@ public class Calculator {
         List<Result> results = new ArrayList<>();
 
         for (Operation operation : input.getOperations()) {
-            results.add(operation.calculate());
+            Result result = new Result();
+            result.setId(operation.getId());
+            result.setResult(operation.getValue());
+            results.add(result);
         }
 
         output.setResult(results);
