@@ -5,9 +5,7 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 import static org.example.App.OUTPUT_SUFFIX;
@@ -49,7 +47,16 @@ public class AppTest {
 
     @Test
     public void shouldCalculateSimple() throws IOException {
+
         App.main(new String[]{PATH_SIMPLE, PATH_SIMPLE});
+        System.out.println("FILE GENERATED:::::::");
+        try (BufferedReader br = new BufferedReader(new FileReader(PATH_SIMPLE + "result" + SEP + "data0001_result.xml"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+
         assertTrue(
                 FileUtils.contentEquals(
                         new File(PATH_SIMPLE + "data0001_result.xml"),
