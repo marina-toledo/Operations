@@ -1,6 +1,6 @@
 package org.example;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class AppTest {
     public static final String PATH_SIMPLE = System.getProperty("user.dir") + RESOURCES_PATH + "simple" + SEP;
     public static final String PATH_COMPLEX = System.getProperty("user.dir") + RESOURCES_PATH + "complex" + SEP;
 
-    public void deleteGeneratedResultFiles(String path) {
+    private void deleteGeneratedResultFiles(String path) {
         File dir = new File(path);
         FileFilter fileFilter = new WildcardFileFilter("*" + OUTPUT_SUFFIX + "*");
 
@@ -47,22 +47,8 @@ public class AppTest {
 
     @Test
     public void shouldCalculateSimple() throws IOException {
-
         App.main(new String[]{PATH_SIMPLE, PATH_SIMPLE});
-        System.out.println("FILE GENERATED:::::::");
-        try (BufferedReader br = new BufferedReader(new FileReader(PATH_SIMPLE + "result" + SEP + "data0001_result.xml"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        }
-
-        assertTrue(
-                FileUtils.contentEquals(
-                        new File(PATH_SIMPLE + "data0001_result.xml"),
-                        new File(PATH_SIMPLE + "result" + SEP + "data0001_result.xml")
-                )
-        );
+        compareFileContent(PATH_SIMPLE + "result" + SEP + "data0001_result.xml", PATH_SIMPLE + "data0001_result.xml");
         deleteGeneratedResultFiles(PATH_SIMPLE);
     }
 
@@ -70,12 +56,13 @@ public class AppTest {
     @Test
     public void shouldCalculateComplex() throws IOException {
         App.main(new String[]{PATH_COMPLEX, PATH_COMPLEX});
-        assertTrue(
-                FileUtils.contentEquals(
-                        new File(PATH_COMPLEX + "data0002_result.xml"),
-                        new File(PATH_COMPLEX + "result" + SEP + "data0002_result.xml")
-                )
-        );
+        compareFileContent(PATH_COMPLEX + "result" + SEP + "data0002_result.xml", PATH_COMPLEX + "data0002_result.xml");
         deleteGeneratedResultFiles(PATH_COMPLEX);
+    }
+
+    private void compareFileContent(String pathExpected, String pathActual) throws IOException {
+        Reader reader1 = new BufferedReader(new FileReader(pathExpected));
+        Reader reader2 = new BufferedReader(new FileReader(pathActual));
+        assertTrue(IOUtils.contentEqualsIgnoreEOL(reader1, reader2));
     }
 }
