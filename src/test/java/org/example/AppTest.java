@@ -1,6 +1,6 @@
 package org.example;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.example.model.ExpressionsInput;
 import org.example.model.ExpressionsOutput;
@@ -9,9 +9,7 @@ import org.example.model.operation.*;
 import org.example.service.Calculator;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,11 +18,13 @@ import static org.junit.Assert.*;
 
 public class AppTest {
 
-    public static final String PATH = System.getProperty("user.dir") + "/src/test/resources/";
-    public static final String PATH_SIMPLE = System.getProperty("user.dir") + "/src/test/resources/simple/";
-    public static final String PATH_COMPLEX = System.getProperty("user.dir") + "/src/test/resources/complex/";
+    public static final String SEP = File.separator;
+    public static final String RESOURCES_PATH = SEP + "src" + SEP + "test" + SEP + "resources" + SEP;
+    public static final String PATH = System.getProperty("user.dir") + RESOURCES_PATH;
+    public static final String PATH_SIMPLE = System.getProperty("user.dir") + RESOURCES_PATH + "simple" + SEP;
+    public static final String PATH_COMPLEX = System.getProperty("user.dir") + RESOURCES_PATH + "complex" + SEP;
 
-    public void deleteGeneratedResultFiles(String path) {
+    private void deleteGeneratedResultFiles(String path) {
         File dir = new File(path);
         FileFilter fileFilter = new WildcardFileFilter("*" + OUTPUT_SUFFIX + "*");
 
@@ -53,24 +53,14 @@ public class AppTest {
     @Test
     public void shouldCalculateSimpleAndParseXML() throws IOException {
         App.main(new String[]{PATH_SIMPLE, PATH_SIMPLE});
-        assertTrue(
-                FileUtils.contentEquals(
-                        new File(PATH_SIMPLE + "data0001_result.xml"),
-                        new File(PATH_SIMPLE + "result/data0001_result.xml")
-                )
-        );
+        compareFileContent(PATH_SIMPLE + "result" + SEP + "data0001_result.xml", PATH_SIMPLE + "data0001_result.xml");
         deleteGeneratedResultFiles(PATH_SIMPLE);
     }
 
     @Test
     public void shouldCalculateComplexAndParseXML() throws IOException {
         App.main(new String[]{PATH_COMPLEX, PATH_COMPLEX});
-        assertTrue(
-                FileUtils.contentEquals(
-                        new File(PATH_COMPLEX + "data0002_result.xml"),
-                        new File(PATH_COMPLEX + "result/data0002_result.xml")
-                )
-        );
+        compareFileContent(PATH_COMPLEX + "result" + SEP + "data0002_result.xml", PATH_COMPLEX + "data0002_result.xml");
         deleteGeneratedResultFiles(PATH_COMPLEX);
     }
 
@@ -121,5 +111,11 @@ public class AppTest {
         assertEquals(expectedOutput,
                 Calculator.process(input)
         );
+    }
+
+    private void compareFileContent(String pathExpected, String pathActual) throws IOException {
+        Reader reader1 = new BufferedReader(new FileReader(pathExpected));
+        Reader reader2 = new BufferedReader(new FileReader(pathActual));
+        assertTrue(IOUtils.contentEqualsIgnoreEOL(reader1, reader2));
     }
 }
