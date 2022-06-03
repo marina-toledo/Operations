@@ -1,17 +1,21 @@
 package org.example.model.operation;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.model.Result;
+import lombok.NoArgsConstructor;
+import org.example.model.IValue;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Division extends Operation {
-    Integer dividend;
-    Integer divisor;
+    IValue dividend;
+    IValue divisor;
 
     @Override
     public Integer getValue() {
-        return dividend / divisor;
+        return dividend.getValue() / divisor.getValue();
     }
 }

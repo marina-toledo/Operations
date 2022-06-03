@@ -1,17 +1,21 @@
 package org.example.model.operation;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.model.Result;
+import lombok.NoArgsConstructor;
+import org.example.model.IValue;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Subtraction extends Operation {
-    Integer minuend;
-    Integer subtrahend;
+    IValue minuend;
+    IValue subtrahend;
 
     @Override
     public Integer getValue() {
-        return minuend - subtrahend;
+        return minuend.getValue() - subtrahend.getValue();
     }
 }

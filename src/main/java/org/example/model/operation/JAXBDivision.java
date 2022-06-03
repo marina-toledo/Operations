@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.example.model.IValue;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,13 +19,13 @@ public class JAXBDivision extends Division {
 
     @Override
     @XmlElement
-    public void setDividend(Integer dividend) {
+    public void setDividend(IValue dividend) {
         this.dividend = dividend;
     }
 
     @Override
     @XmlElement
-    public void setDivisor(Integer divisor) {
+    public void setDivisor(IValue divisor) {
         this.divisor = divisor;
     }
 }

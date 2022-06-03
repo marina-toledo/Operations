@@ -5,6 +5,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.example.model.IValue;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class JAXBMultiplication extends Multiplication {
 
     @Override
     @XmlElement
-    public void setFactor(List<Integer> factor) {
+    public void setFactor(List<IValue> factor) {
         this.factor = factor;
     }
 }
